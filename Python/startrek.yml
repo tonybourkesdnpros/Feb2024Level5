@@ -1,0 +1,21 @@
+ships:
+  '1701':
+    Name: "Enterprise"
+    Captain: "James T Kirk"
+    FO: "Spock"
+    CE: "Montgomery Scott"
+  1701-D:
+    Name: "Enterprise"
+    Captain: "Jean-Luc Picard"
+    FO: "William T Riker"
+    CE: "Geordi LaForge"
+  '1864':
+    Name: "Reliant"
+    Captain: "Khan Nooniang-Soongh"
+    FO: "Woyoon"
+  '74656':
+    Name: "Voyager"
+    Captain: "Kathryn Janeway"
+    Fo: "Chakotay"
+    CE: "B'Lanna Torres"
+
