@@ -24,20 +24,21 @@ full_greeting = first_word + second_word
 World_is_flat = True
 
 
-### Conditionals
+## Conditionals
 
 # if World_is_flat == False:
+
 #     print("NASA was right!")
 # if World_is_flat == True:
 #     print("I fell off the edge")
 
-### Complex Variables (lists, dictionaries)
+## Complex Variables (lists, dictionaries)
 
-# planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
-# i = 1
-# for item in planets:
+planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+i = 1
+for item in planets:
 #     print("The", i, "planet from the sun is:", item)
-#     i = i + 1 
+    i = i + 1 
 
 ### Dictionary (key/value pairs)
 
