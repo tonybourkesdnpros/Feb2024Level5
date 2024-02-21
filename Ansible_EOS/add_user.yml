@@ -1,0 +1,16 @@
+---
+- name: Add user
+  hosts: all
+  tasks:
+  - name: create a new user
+    arista.eos.eos_user:
+      name: automator
+      nopassword: true
+      privilege: 15
+      role: network-admin
+      state: present
+  - name: Add SSH Key
+    arista.eos.eos_user:
+      name: automator
+      sshkey: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      state: present
