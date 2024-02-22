@@ -1,0 +1,3 @@
+configlet_list:
+  MLAG_Left: "{{ lookup('file', '../configlets/MLAG_Left.txt') }}"
+  MLAG_Right: "{{ lookup('file', '../configlets/MLAG_Right.txt') }}"

@@ -1,0 +1,15 @@
+---
+- name: Assign configlets
+  hosts: cvp1
+  tasks:
+  - name: Assign configlets via data model
+    arista.cvp.cv_device_v3:
+      devices: "{{ CVP_DEVICES }}"
+      apply_mode: strict
+    register: DEVICE_APPLY
+  - name: Print variables
+    ansible.builtin.debug:
+      msg: "{{ DEVICE_APPLY.taskIds }}"
+  - name: Run change control
+    arista.cvp.cv_task_v3:
+      tasks: "{{ DEVICE_APPLY.taskIds }}"

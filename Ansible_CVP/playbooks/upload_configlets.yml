@@ -1,0 +1,10 @@
+---
+- name: Uploading configlets
+  hosts: cvp1
+
+  tasks:
+  - name: Upload the MLAG configlets
+    arista.cvp.cv_configlet_v3:
+      configlets: "{{ configlet_list }}"
+
+  
