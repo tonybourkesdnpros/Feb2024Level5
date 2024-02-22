@@ -1,0 +1,13 @@
+peer-filter EVPN
+   10 match as-range 65100-65199 result accept
+router bgp 65001 
+   router-id 192.168.101.101
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   bgp listen range 192.168.101.0/24 peer-group EVPN peer-filter EVPN
+   neighbor EVPN peer group
+   neighbor EVPN ebgp-multihop
+   neighbor EVPN send-community extended
+   !
+   address-family evpn
+      neighbor EVPN activate

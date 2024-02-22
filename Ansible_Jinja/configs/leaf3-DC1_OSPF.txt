@@ -1,0 +1,23 @@
+interface Ethernet3
+  ip address unnumbered loopback0
+  no switchport
+  mtu 1500
+  ip ospf area 0
+  ip ospf network point-to-point
+interface Ethernet4
+  ip address unnumbered loopback0
+  no switchport
+  mtu 1500
+  ip ospf area 0
+  ip ospf network point-to-point
+interface Ethernet5
+  ip address unnumbered loopback0
+  no switchport
+  mtu 1500
+  ip ospf area 0
+  ip ospf network point-to-point
+interface loopback0
+  ip address 192.168.101.13/32
+  ip ospf area 0
+router ospf 10
+  router-id 192.168.101.13

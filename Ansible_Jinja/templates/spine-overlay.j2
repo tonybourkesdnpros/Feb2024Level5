@@ -1,0 +1,13 @@
+peer-filter EVPN
+   10 match as-range {{ overlay['fabric']['ASN_leaf_range'] }} result accept
+router bgp {{ overlay['fabric']['spine_ASN'] }} 
+   router-id {{ OSPF['devices'][inventory_hostname]['loopbacks']['loopback0']}}
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   bgp listen range {{ overlay['fabric']['lo0'] }} peer-group EVPN peer-filter EVPN
+   neighbor EVPN peer group
+   neighbor EVPN ebgp-multihop
+   neighbor EVPN send-community extended
+   !
+   address-family evpn
+      neighbor EVPN activate

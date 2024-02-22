@@ -1,0 +1,33 @@
+---
+- name: Generate Overlay EVPN Config (Leafs)
+  hosts: DC1_LEAFS
+  tasks:
+  - name: Load up OSPF vars
+    ansible.builtin.include_vars:
+      file: ../vars/ospf.yml
+      name: OSPF
+  - name: Load up Overlay vars
+    ansible.builtin.include_vars:
+      file: ../vars/overlay.yml
+      name: overlay
+  - name: Generate config
+    ansible.builtin.template:
+      src: ../templates/leaf-overlay.j2
+      dest: "configs/{{ inventory_hostname }}_overlay.txt"
+      mode: "0644"
+- name: Generate Overlay EVPN Config (Spines)
+  hosts: DC1_SPINES
+  tasks:
+  - name: Load up OSPF vars
+    ansible.builtin.include_vars:
+      file: ../vars/ospf.yml
+      name: OSPF
+  - name: Load up Overlay vars
+    ansible.builtin.include_vars:
+      file: ../vars/overlay.yml
+      name: overlay
+  - name: Generate config
+    ansible.builtin.template:
+      src: ../templates/spine-overlay.j2
+      dest: "configs/{{ inventory_hostname }}_overlay.txt"
+      mode: "0644"

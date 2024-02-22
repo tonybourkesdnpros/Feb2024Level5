@@ -1,0 +1,15 @@
+router bgp {{ overlay['fabric']['leafs'][inventory_hostname] }} 
+   router-id {{ OSPF['devices'][inventory_hostname]['loopbacks']['loopback0']}}
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   neighbor EVPN peer group
+   neighbor EVPN remote-as {{ overlay['fabric']['spine_ASN'] }} 
+   neighbor EVPN update-source Loopback0
+   neighbor EVPN ebgp-multihop 3
+   neighbor EVPN send-community extended
+{% for spine in overlay['fabric']['spines'] %}
+   neighbor {{ overlay['fabric']['spines'][spine] }} peer group EVPN
+{% endfor %}
+   !
+   address-family evpn
+      neighbor EVPN activate

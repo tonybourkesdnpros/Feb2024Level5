@@ -1,0 +1,10 @@
+---
+- name: Assign configlets
+  hosts: cvp1
+  vars_files:
+    - ../vars/CVP_model.yml
+  tasks:
+  - name: Assign configlets via data model
+    arista.cvp.cv_device_v3:
+      devices: "{{ CVP_DEVICES }}"
+      apply_mode: strict

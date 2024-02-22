@@ -1,0 +1,15 @@
+{% for interface in OSPF['devices'][inventory_hostname]['p2p'] %}
+interface {{ interface }}
+  ip address unnumbered loopback0
+  no switchport
+  mtu {{ OSPF['global_settings']['mtu'] }}
+  ip ospf area 0
+  ip ospf network point-to-point
+{% endfor %}
+{% for loopback in OSPF['devices'][inventory_hostname]['loopbacks']%}
+interface {{ loopback }}
+  ip address {{ OSPF['devices'][inventory_hostname]['loopbacks'][loopback]}}/32
+  ip ospf area 0
+{% endfor %}
+router ospf 10
+  router-id {{ OSPF['devices'][inventory_hostname]['loopbacks']['loopback0']}}

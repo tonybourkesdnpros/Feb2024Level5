@@ -1,0 +1,15 @@
+router bgp 65101 
+   router-id 192.168.101.11
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   neighbor EVPN peer group
+   neighbor EVPN remote-as 65001 
+   neighbor EVPN update-source Loopback0
+   neighbor EVPN ebgp-multihop 3
+   neighbor EVPN send-community extended
+   neighbor 192.168.101.101 peer group EVPN
+   neighbor 192.168.101.102 peer group EVPN
+   neighbor 192.168.101.103 peer group EVPN
+   !
+   address-family evpn
+      neighbor EVPN activate

@@ -1,0 +1,13 @@
+---
+- name: Demo of Jinja
+  hosts: DC1_LEAFS, DC1_SPINES
+  tasks:
+  - name: Load up OSPF vars
+    ansible.builtin.include_vars:
+      file: ../vars/ospf.yml
+      name: OSPF
+  - name: Generate config
+    ansible.builtin.template:
+      src: ../templates/interfaces.j2
+      dest: "configs/{{ inventory_hostname }}_OSPF.txt"
+      mode: "0644"

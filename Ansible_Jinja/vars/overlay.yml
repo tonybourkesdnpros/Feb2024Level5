@@ -1,0 +1,15 @@
+fabric:
+  ASN_leaf_range: 65100-65199
+  lo0: 192.168.101.0/24
+  spine_ASN: 65001
+  spines:
+    spine1-DC1: 192.168.101.101
+    spine2-DC1: 192.168.101.102
+    spine3-DC1: 192.168.101.103
+  leafs:
+    leaf1-DC1: 65101
+    leaf2-DC1: 65101
+    leaf3-DC1: 65102
+    leaf4-DC1: 65102
+  
+  

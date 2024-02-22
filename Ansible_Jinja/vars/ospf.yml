@@ -1,0 +1,55 @@
+global_settings:
+  mtu: 1500
+devices:
+  leaf1-DC1:
+    loopbacks:
+      loopback0: 192.168.101.11
+    p2p:
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  leaf2-DC1:
+    loopbacks:
+      loopback0: 192.168.101.12
+    p2p:
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  leaf3-DC1:
+    loopbacks:
+      loopback0: 192.168.101.13
+    p2p:
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  leaf4-DC1:
+    loopbacks:
+      loopback0: 192.168.101.14
+    p2p:
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  spine1-DC1:
+    loopbacks:
+      loopback0: 192.168.101.101
+    p2p:
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  spine2-DC1:
+    loopbacks:
+      loopback0: 192.168.101.102
+    p2p:
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+  spine3-DC1:
+    loopbacks:
+      loopback0: 192.168.101.103
+    p2p:
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
