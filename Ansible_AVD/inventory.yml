@@ -3,7 +3,7 @@ all:
     CVP_Cluster:
       vars:
         ansible_user: arista
-        ansible_password: arista1234
+        ansible_password: aristaqzes
         ansible_connection: httpapi
         ansible_httpapi_use_ssl: True
         ansible_httpapi_validate_certs: False
@@ -14,6 +14,16 @@ all:
           ansible_httpapi_host: 192.168.0.5
           ansible_host: 192.168.0.5
     FABRIC:
+      vars:
+        ansible_user: arista
+        # ansible_password: aristaqzes
+        # ansible_connection: httpapi
+        # ansible_httpapi_use_ssl: True
+        # ansible_httpapi_validate_certs: False
+        # ansible_network_os: eos
+        # ansible_httpapi_port: 443
+        ansible_connection: network_cli
+        ansible_network_os: eos
       children:
         DC1:
           children:

@@ -1,0 +1,7 @@
+---
+- name: Run fabric tests
+  hosts: FABRIC
+  tasks:
+  - name: Test fabric
+    ansible.builtin.import_role:
+      name: arista.avd.eos_validate_state

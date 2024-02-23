@@ -1,0 +1,94 @@
+---
+
+fabric_name: FABRIC # This must match inventory group, and group_vars file
+
+evpn_vlan_aware_bundles: True
+p2p_uplinks_mtu: 1500 # Normally would be set to 9214
+
+bgp_update_wait_install: 
+bgp_update_wait_for_convergence: false
+
+# Spines
+
+spine:
+  defaults:
+    bgp_as: 65001
+    platform: cEOS
+    loopback_ipv4_pool: 192.168.101.0/24
+    mlag: false
+  nodes:
+    - name: spine1-DC1
+      id: 101 # Used to assigned lo0 from pool
+    - name: spine2-DC1
+      id: 102
+    - name: spine3-DC1
+      id: 103
+
+l3leaf:
+  defaults:
+    bgp_as: 65101-65199
+    loopback_ipv4_pool: 192.168.101.0/24 # Loopback0
+    vtep_loopback_ipv4_pool: 192.168.102.0/24 # Loopback1/VTEP IP
+    uplink_interfaces: # List of interfaces connecting to spines
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+    uplink_switches: 
+      - spine1-DC1
+      - spine2-DC1
+      - spine3-DC1
+    uplink_ipv4_pool: 192.168.103.0/24 # Chopped up into /31s for p2p links
+    mlag_interfaces:
+      - Ethernet1
+      - Ethernet2
+    mlag_peer_ipv4_pool: 192.168.104.0/25
+    mlag_peer_l3_ipv4_pool: 192.168.104.128/25
+    virtual_router_mac_address: 00:1C:73:00:00:99
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 8192
+    mlag: True
+
+  node_groups:
+    - group: dc1_mlag1
+      nodes:
+        - name: leaf1-DC1
+          id: 1
+          uplink_switch_interfaces: # Interface on the spine
+          - Ethernet2 # Spine1-DC1
+          - Ethernet2 # Spine2-DC1
+          - Ethernet2 # Spine3-DC1
+        - name: leaf2-DC1
+          id: 2
+          uplink_switch_interfaces: # Interface on the spine
+          - Ethernet3 # Spine1-DC1
+          - Ethernet3 # Spine2-DC1
+          - Ethernet3 # Spine3-DC1
+    - group: dc1_mlag2
+      nodes:
+        - name: leaf3-DC1
+          id: 3
+          uplink_switch_interfaces: # Interface on the spine
+          - Ethernet4 # Spine1-DC1
+          - Ethernet4 # Spine2-DC1
+          - Ethernet4 # Spine3-DC1
+        - name: leaf4-DC1
+          id: 4
+          uplink_switch_interfaces: # Interface on the spine
+          - Ethernet5 # Spine1-DC1
+          - Ethernet5 # Spine2-DC1
+          - Ethernet5 # Spine3-DC1
+  nodes:
+    - name: borderleaf1-DC1
+      bgp_as: 65198
+      id: 5
+      uplink_switch_interfaces: # Interface on the spine
+      - Ethernet6 # Spine1-DC1
+      - Ethernet6 # Spine2-DC1
+      - Ethernet6 # Spine3-DC1
+    - name: borderleaf2-DC1
+      bgp_as: 65199
+      id: 6
+      uplink_switch_interfaces: # Interface on the spine
+      - Ethernet7 # Spine1-DC1
+      - Ethernet7 # Spine2-DC1
+      - Ethernet7 # Spine3-DC1
