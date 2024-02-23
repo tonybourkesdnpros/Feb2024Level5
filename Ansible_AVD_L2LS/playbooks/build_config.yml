@@ -1,0 +1,10 @@
+---
+- name: Build and configure playbooks
+  hosts: FABRIC
+  tasks:
+  - name: Generate AVD structured configs
+    ansible.builtin.import_role:
+      name: arista.avd.eos_designs
+  - name: Turn structured YAML into EOS syntax
+    ansible.builtin.import_role:
+      name: arista.avd.eos_cli_config_gen

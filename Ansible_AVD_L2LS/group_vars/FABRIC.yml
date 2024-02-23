@@ -1,0 +1,141 @@
+
+---
+### group_vars/DC1_FABRIC.yml
+
+# Set the Fabric Name - must match an Ansible Inventory Group
+fabric_name: FABRIC
+
+# Set Design Type to l2ls
+design:
+  type: l2ls
+
+# Spine Switches (L2 only)
+spine:
+  defaults:
+    platform: cEOS-LAB
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 4096
+    mlag_peer_ipv4_pool: 192.168.0.0/24
+    mlag_interfaces: [Ethernet1]
+  node_groups:
+    - group: DC1_SPINES
+      nodes:
+        - name: spine1-DC1
+          id: 1
+        - name: spine2-DC1
+          id: 2
+
+# Leaf Switches
+leaf:
+  defaults:
+    platform: cEOS-LAB
+    mlag_peer_ipv4_pool: 192.168.0.0/24
+    uplink_switches: [spine1-DC1, spine2-DC1]
+    uplink_interfaces: [Ethernet2, Ethernet3]
+    mlag_interfaces: [Ethernet1, Ethernet2]
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+
+  node_groups:
+    - group: mlag1
+      mlag: true
+      nodes:
+        - name: leaf1-DC1
+          id: 1
+          uplink_switch_interfaces: [Ethernet2, Ethernet2]
+        - name: leaf2-DC1
+          id: 2
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+    - group: mlag2
+      mlag: true
+      nodes:
+        - name: leaf3-DC1
+          id: 3
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: leaf4-DC1
+          id: 4
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
+
+#### Override for vEOS/cEOS Lab Caveats ####
+p2p_uplinks_mtu: 1500
+
+# Documentation
+eos_designs_documentation:
+  connected_endpoints: true
+
+
+# ---
+
+# fabric_name: FABRIC # This must match inventory group, and group_vars file
+
+# evpn_vlan_aware_bundles: True
+# p2p_uplinks_mtu: 1500 # Normally would be set to 9214
+
+# bgp_update_wait_install: 
+# bgp_update_wait_for_convergence: false
+
+# design:
+#   type: l2ls
+
+# # Spines
+
+# spine:
+#   defaults:
+#     virtual_router_mac_address: 00:1C:73:00:00:99
+#     spanning_tree_mode: mstp
+#     spanning_tree_priority: 4096
+#     mlag_peer_ipv4_pool: 192.168.104.0/25
+#     mlag_interfaces: [Ethernet1]
+#     platform: cEOS
+#     mlag: true
+#   nodes_groups:
+#     - group: DC1_SPINES
+#       nodes:
+#       - name: spine1-DC1
+#         id: 101 
+#       - name: spine2-DC1
+#         id: 102
+
+# leaf:
+#   defaults:
+#     mlag_interfaces:
+#     - Ethernet1
+#     - Ethernet2
+#     mlag_peer_ipv4_pool: 192.168.104.0/25
+#     uplink_interfaces: # List of interfaces connecting to spines
+#       - Ethernet3
+#       - Ethernet4
+#     uplink_switches: 
+#       - spine1-DC1
+#       - spine2-DC1
+#     virtual_router_mac_address: 00:1C:73:00:00:99
+#     spanning_tree_mode: mstp
+#     spanning_tree_priority: 16384
+#     mlag: True
+
+#   node_groups:
+#     - group: dc1_mlag1
+#       nodes:
+#         - name: leaf1-DC1
+#           id: 1
+#           uplink_switch_interfaces: # Interface on the spine
+#           - Ethernet2 # Spine1-DC1
+#           - Ethernet2 # Spine2-DC1
+#         - name: leaf2-DC1
+#           id: 2
+#           uplink_switch_interfaces: # Interface on the spine
+#           - Ethernet3 # Spine1-DC1
+#           - Ethernet3 # Spine2-DC1
+#     - group: dc1_mlag2
+#       nodes:
+#         - name: leaf3-DC1
+#           id: 3
+#           uplink_switch_interfaces: # Interface on the spine
+#           - Ethernet4 # Spine1-DC1
+#           - Ethernet4 # Spine2-DC1
+#         - name: leaf4-DC1
+#           id: 4
+#           uplink_switch_interfaces: # Interface on the spine
+#           - Ethernet5 # Spine1-DC1
+#           - Ethernet5 # Spine2-DC1
+  

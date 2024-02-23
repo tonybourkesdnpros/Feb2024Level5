@@ -1,0 +1,50 @@
+all:
+  children:
+    CVP_Cluster:
+      vars:
+        ansible_user: arista
+        ansible_password: aristaqzes
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+      hosts:
+        cvp1:
+          ansible_httpapi_host: 192.168.0.5
+          ansible_host: 192.168.0.5
+    FABRIC:
+      vars:
+        ansible_user: arista
+        # ansible_password: aristaqzes
+        # ansible_connection: httpapi
+        # ansible_httpapi_use_ssl: True
+        # ansible_httpapi_validate_certs: False
+        # ansible_network_os: eos
+        # ansible_httpapi_port: 443
+        ansible_connection: network_cli
+        ansible_network_os: eos
+      children:
+        DC1:
+          children:
+            DC1_SPINES:
+              vars:
+                type: spine
+              hosts:
+                spine1-DC1:
+                spine2-DC1:
+            DC1_LEAFS:
+              vars:
+                type: leaf
+              hosts:  
+                leaf1-DC1:
+                leaf2-DC1:
+                leaf3-DC1:
+                leaf4-DC1:
+    EVPN_SERVICES:
+      children:
+        DC1_LEAFS:
+    ENDPOINT_CONNECT:
+      children:
+        DC1_LEAFS:
+

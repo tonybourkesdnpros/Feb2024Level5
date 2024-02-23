@@ -1,0 +1,13 @@
+---
+- name: Deploy fabric to CVP
+  hosts: cvp1
+  
+  tasks:
+  - name: Provision CVP with AVD generated configuration
+    ansible.builtin.import_role:
+      name: arista.avd.eos_config_deploy_cvp
+    vars:
+      fabric_name: FABRIC
+      configlets_prefix: AVD
+      state: present
+      execute_tasks: false
